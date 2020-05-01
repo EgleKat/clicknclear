@@ -27,3 +27,15 @@ exports.getTrack = function (req, res) {
 exports.getAllTracks = function (req, res) {
     res.send(tracks);
 }
+
+exports.getTracksByArtist = function (req, res) {
+    let reqArtist = req.params.artist;
+    if (!reqArtist) {
+        res.send('Err, invalid Artist');
+        return;
+    }
+
+    let artistTracks = tracks.filter((track) => (track.artist === reqArtist));
+
+    res.send(artistTracks);
+}

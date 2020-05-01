@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var tracksModule = require('../modules/tracks-module');
 
-router.get('/', function(req, res, next) {
-    res.send('API - ARTIST');
-});
+router.get('/:artist',tracksModule.getTracksByArtist);
 
 module.exports = router;
