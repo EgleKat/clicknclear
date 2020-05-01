@@ -118,7 +118,31 @@ class ArtistPopUp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { apiResponse: { id: null, artist: null, title: null } };
+    this.state = { apiResponse: [] };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.artist !== this.props.artist)
+      this.callAPI();
+
+  }
+
+  componentDidMount = () => this.callAPI();
+
+  callAPI() {
+    fetch("http://localhost:9000/artist/" + this.props.artist)
+      .then(res => res.text())
+      .then(res => {
+        let parsedJson = JSON.parse(res);
+        if (parsedJson.err) {
+          return;
+        }
+        this.setState({ apiResponse: parsedJson })
+      });
+
+  }
+  listTracks = () => {
+    return this.state.apiResponse.map((track) =>  <Track showArtist={false} trackId={track.id} />);
   }
   render() {
     return (
@@ -134,7 +158,9 @@ class ArtistPopUp extends React.Component {
               </button>
             </div>
             <div className="modal-body">
-              <Track showArtist={false} trackId={1} />
+              <table className="table">
+                {this.listTracks()}
+              </table>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
