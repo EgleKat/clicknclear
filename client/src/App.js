@@ -9,7 +9,7 @@ class App extends React.Component {
   }
 
   callAPI() {
-    fetch("http://localhost:9000")
+    fetch("http://localhost:9000/")
       .then(res => res.text())
       .then(res => this.setState({ apiResponse: res }));
   }
@@ -28,14 +28,6 @@ class App extends React.Component {
 
           <p className="App-intro">{this.state.apiResponse}</p>
 
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-        </a>
         </header>
       </div>
     );
